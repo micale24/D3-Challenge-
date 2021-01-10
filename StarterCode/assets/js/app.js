@@ -47,5 +47,20 @@ const yScale = d3.scaleLinear()
 const xAxis = d3.axisBottom(xScale);
 const yAxis = d3.axisLeft(yScale);
 
+//Appending chart group to html
+chartGroup.append("g").attr("transform", `translate(0, ${height})`).call(xAxis);
+chartGroup.append("g").call(yAxis);
+
+//Scatter Plot
+chartGroup.selectAll("circle")
+.data(CensusData)
+.enter()
+.append("circle")
+.attr("cx", d=>xScale(d.age))
+.attr("cy", d=>yScale(d.obesity))
+.attr("r", "10")
+.attr("stroke-width", "1")
+.classed("stateCircle", true)
+.attr("opacity", 0.75);
 
 });
