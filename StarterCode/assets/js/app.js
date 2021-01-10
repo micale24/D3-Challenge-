@@ -63,4 +63,41 @@ chartGroup.selectAll("circle")
 .classed("stateCircle", true)
 .attr("opacity", 0.75);
 
+//Text to the datapoint
+chartGroup.append("g")
+  .selectAll('text')
+  .data(CensusData)
+  .enter()
+  .append("text")
+  .text(d=>d.abbr)
+  .attr("x",d=>xScale(d.age))
+  .attr("y",d=>yScale(d.obesity))
+  .classed(".stateText", true)
+  .attr("font-family", "comic sans")
+  .attr("text-anchor", "middle")
+  .attr("fill", "white")
+  .attr("font-size", "10px")
+  .style("font-weight", "bold")
+  .attr("alignment-baseline", "central");
+
+  //Axes Titles
+  chartGroup.append("text")
+  .attr("transform", `translate(${width / 2}, ${height + margin.top + 13})`)
+  .attr("text-anchor", "middle")
+  .attr("font-size", "16px")
+  .attr("fill", "black")
+  .style("font-weight", "bold")
+  .text("Median Age");
+
+  chartGroup.append("text")
+  .attr("y", 0 - ((margin.left / 2) + 2))
+  .attr("x", 0 - (height / 2))
+  .attr("text-anchor", "middle")
+  .attr("font-size", "16px")
+  .attr("fill", "black")
+  .style("font-weight", "bold")
+  .attr("transform", "rotate(-90)")
+  .text("Obseity (%)");
+}).catch(function(error) {
+  console.log(error);
 });
