@@ -32,72 +32,72 @@ d3.csv("assets/data/data.csv").then(function(CensusData) {
     console.log(data.obesity);
   });
 
-//Plot Scales 
-const xScale = d3.scaleLinear()
-.domain(d3.extent(CensusData, d => d.age))
-.range([0, width])
-.nice(); //Used to round anomaly values in the domain
+  //Plot Scales 
+  const xScale = d3.scaleLinear()
+    .domain(d3.extent(CensusData, d => d.age))
+    .range([0, width])
+    .nice(); //Used to round anomaly values in the domain
 
-const yScale = d3.scaleLinear()
-.domain([6,d3.max(CensusData, d => d.obesity])
-.range([height, 0])
-.nice();
+  const yScale = d3.scaleLinear()
+    .domain([6,d3.max(CensusData, d => d.obesity)])
+    .range([height, 0])
+    .nice();
 
-//Plot Axes
-const xAxis = d3.axisBottom(xScale);
-const yAxis = d3.axisLeft(yScale);
+  //Plot Axes
+  const xAxis = d3.axisBottom(xScale);
+  const yAxis = d3.axisLeft(yScale);
 
-//Appending chart group to html
-chartGroup.append("g").attr("transform", `translate(0, ${height})`).call(xAxis);
-chartGroup.append("g").call(yAxis);
+  //Appending chart group to html
+  chartGroup.append("g").attr("transform", `translate(0, ${height})`).call(xAxis);
+  chartGroup.append("g").call(yAxis);
 
-//Scatter Plot
-chartGroup.selectAll("circle")
-.data(CensusData)
-.enter()
-.append("circle")
-.attr("cx", d=>xScale(d.age))
-.attr("cy", d=>yScale(d.obesity))
-.attr("r", "10")
-.attr("stroke-width", "1")
-.classed("stateCircle", true)
-.attr("opacity", 0.75);
+  //Scatter Plot
+  chartGroup.selectAll("circle")
+    .data(CensusData)
+    .enter()
+    .append("circle")
+    .attr("cx", d=>xScale(d.age))
+    .attr("cy", d=>yScale(d.obesity))
+    .attr("r", "10")
+    .attr("stroke-width", "1")
+    .classed("stateCircle", true)
+    .attr("opacity", 0.75);
 
-//Text to the datapoint
-chartGroup.append("g")
-  .selectAll('text')
-  .data(CensusData)
-  .enter()
-  .append("text")
-  .text(d=>d.abbr)
-  .attr("x",d=>xScale(d.age))
-  .attr("y",d=>yScale(d.obesity))
-  .classed(".stateText", true)
-  .attr("font-family", "comic sans")
-  .attr("text-anchor", "middle")
-  .attr("fill", "white")
-  .attr("font-size", "10px")
-  .style("font-weight", "bold")
-  .attr("alignment-baseline", "central");
+  //Text to the datapoint
+  chartGroup.append("g")
+    .selectAll('text')
+    .data(CensusData)
+    .enter()
+    .append("text")
+    .text(d=>d.abbr)
+    .attr("x",d=>xScale(d.age))
+    .attr("y",d=>yScale(d.obesity))
+    .classed(".stateText", true)
+    .attr("font-family", "comic sans")
+    .attr("text-anchor", "middle")
+    .attr("fill", "white")
+    .attr("font-size", "10px")
+    .style("font-weight", "bold")
+    .attr("alignment-baseline", "central");
 
   //Axes Titles
   chartGroup.append("text")
-  .attr("transform", `translate(${width / 2}, ${height + margin.top + 13})`)
-  .attr("text-anchor", "middle")
-  .attr("font-size", "16px")
-  .attr("fill", "black")
-  .style("font-weight", "bold")
-  .text("Median Age");
+    .attr("transform", `translate(${width / 2}, ${height + margin.top + 13})`)
+    .attr("text-anchor", "middle")
+    .attr("font-size", "16px")
+    .attr("fill", "black")
+    .style("font-weight", "bold")
+    .text("Median Age");
 
   chartGroup.append("text")
-  .attr("y", 0 - ((margin.left / 2) + 2))
-  .attr("x", 0 - (height / 2))
-  .attr("text-anchor", "middle")
-  .attr("font-size", "16px")
-  .attr("fill", "black")
-  .style("font-weight", "bold")
-  .attr("transform", "rotate(-90)")
-  .text("Obseity (%)");
+    .attr("y", 0 - ((margin.left / 2) + 2))
+    .attr("x", 0 - (height / 2))
+    .attr("text-anchor", "middle")
+    .attr("font-size", "16px")
+    .attr("fill", "black")
+    .style("font-weight", "bold")
+    .attr("transform", "rotate(-90)")
+    .text("Obseity (%)");
 }).catch(function(error) {
   console.log(error);
 });
