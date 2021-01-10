@@ -29,3 +29,9 @@ body {
   margin: 0;
   font-size: 16px;
 }
+
+.line {
+  stroke: #E4002B;
+  fill: none;
+  stroke-width: 3;
+}
